@@ -4,10 +4,12 @@ from flask import Flask, render_template
 import secrets
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_bootstrap import Bootstrap
 
 
 db = SQLAlchemy()
 login_manager = LoginManager()
+
 
 def create_app(test_config=None):
 
@@ -20,7 +22,7 @@ def create_app(test_config=None):
 
 
     login_manager.init_app(app)
-
+    bootstrap = Bootstrap(app)
 
     try:
         os.makedirs(app.instance_path)

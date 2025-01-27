@@ -1,15 +1,11 @@
+{% extends "base.html"%}
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>goodHabits</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
-    />
+    <title>{%block title%}goodHabits{% endblock %}</title>
   </head>
   <body>
+    {% block content %}
     <header>
       <h1>Welcome to goodHabits</h1>
     </header>
@@ -22,5 +18,6 @@
     <footer>
       <p>&copy; 2025 goodHabits</p>
     </footer>
+    {% endblock%}
   </body>
 </html>

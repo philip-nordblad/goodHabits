@@ -65,9 +65,9 @@ def login():
 
     return render_template('auth/login.html', form=form)
 
-
-    @bp.route('/logout')
-    @login_required
-    def logout():
-        logout_user()
-        redirect(url_for('index'))
+@bp.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    redirect(url_for('index'))
+       

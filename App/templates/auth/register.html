@@ -1,39 +1,74 @@
+{% extends "base.html" %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    {% block head %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
-    />
+
+    <title>{% block title %} Register {% endblock %}</title>
+    {% endblock %}
   </head>
   <body>
+    {% block content %}
     <h1>Register</h1>
-    <form method="post" action="{{ url_for('auth.register') }}">
-      <label for="username">Username</label>
-      <input type="text" id="username" name="username" required />
+    <form
+      method="post"
+      action="{{ url_for('auth.register') }}"
+      class="form-group"
+    >
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          class="form-control"
+          required
+        />
+      </div>
 
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required />
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form-control"
+          required
+        />
+      </div>
 
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" required />
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="form-control"
+          required
+        />
+      </div>
 
-      <label for="confirm_password">Confirm Password</label>
-      <input
-        type="password"
-        id="confirm_password"
-        name="confirm_password"
-        required
-      />
+      <div class="mb-3">
+        <label for="confirm_password" class="form-label"
+          >Confirm Password</label
+        >
+        <input
+          type="password"
+          id="confirm_password"
+          name="confirm_password"
+          class="form-control"
+          required
+        />
+      </div>
 
-      <button type="submit">Register</button>
+      <button type="submit" class="btn btn-primary">Register</button>
     </form>
     <p>
       Already have an account?
       <a href="{{ url_for('auth.login') }}">Login here</a>.
     </p>
+    {% endblock %}
   </body>
 </html>
