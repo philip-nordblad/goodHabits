@@ -1,7 +1,10 @@
 from flask_login import login_required, login_user
 from flask import (Blueprint, flash, g, redirect, render_template,request,session,url_for)
 from . import db, login_manager
+from werkzeug.security import generate_password_hash, check_password_hash
 from .forms import LoginForm, RegistrationForm
+from .models import User
+
 
 bp = Blueprint('auth', __name__,url_prefix='/auth')
 
@@ -14,6 +17,7 @@ def load_user(user_id):
 def register():
 
     form = RegistrationForm()
+    print(form.validate())
 
     if form.validate_on_submit():
 
@@ -21,14 +25,20 @@ def register():
         password = form.password.data
 
         error = None
-
+        print('hi') 
         if User.query.filter_by(username=username).first() is not None:
             error = f"User {username} is already registerd."
 
         if error is None:
             #set up new user
-
+            print("Creating user")
             new_user = User(username=username,password=generate_password_hash(password,method='pbkdf2:sha256')) 
+            
+
+            #verify getting user
+            print(new_user)
+            
+
             db.session.add(new_user)
             db.session.commit()
             return redirect(url_for('auth.login'))
@@ -48,7 +58,7 @@ def login():
         password = form.password.data
 
         error = None
-        
+
         user = User.query.filter_by(username=username).first()
 
         if user is None:
