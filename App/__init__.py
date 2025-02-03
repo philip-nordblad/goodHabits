@@ -47,6 +47,9 @@ def create_app(test_config=None):
     from . import auth
     app.register_blueprint(auth.bp)
 
+    from . import habits
+    app.register_blueprint(habits.bp)
+
 
     @app.route('/')
     def index():

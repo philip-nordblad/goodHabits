@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+<title>{% block title %} Home {%endblock%}</title>
+{% block content %}
+<div class="container">
+  <h1>Welcome, {{ current_user.username }}</h1>
+  <p>Track and improve your daily habits with our app.</p>
+</div>
+
+<div class="container">
+  <h2>Create a New Habit</h2>
+  <form method="post" class="container-sm" action="{{url_for('home.home')}}">
+    {{form.hidden_tag()}}
+    <div>
+      {{form.title.label }}<br />
+      {{ form.title(size=32)}}<br />
+      {% for error in form.title.errors %}
+      <span style="color: red">[{{ error }}]</span><br />
+      {% endfor %}
+    </div>
+    <div>
+      {{form.category.label}}<br />
+      {{ form.category }}
+      <br />
+    </div>
+    <div>{{form.submit()}}</div>
+  </form>
+
+  <h2>Your Habits</h2>
+  {% if habits %}
+  <ul>
+    {% for habit in habits %}
+    <li>
+      <strong>{{habit.title}}</strong> - {{habit.category}} - Count:
+      {{habit.count}}
+    </li>
+    <span style="display: inline-flex; align-items: center">
+      <form
+        method="post"
+        action="{{url_for('home.addCount', habit_id = habit.id)}}"
+        style="margin: 0 5px"
+      >
+        {{form.csrf_token}}
+        <button type="count" class="btn btn-sm">+</button>
+      </form>
+      <form
+        method="post"
+        action="{{ url_for('home.deleteHabit', habit_id = habit.id)}}"
+        style="margin: 0 5px"
+      >
+        {{ form.csrf_token }}
+        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+      </form>
+    </span>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No habits added yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

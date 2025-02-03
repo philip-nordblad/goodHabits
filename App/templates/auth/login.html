@@ -8,6 +8,7 @@
     {% block content%}
     <div class="login-container">
       <h2>Login</h2>
+
       <form action="{{ url_for('auth.login') }}" method="post">
         <!-- Added line -->
         {{ form.csrf_token }}

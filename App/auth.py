@@ -17,15 +17,14 @@ def load_user(user_id):
 def register():
 
     form = RegistrationForm()
-    print(form.validate())
+    print(f"Is form valid? {str(form.validate())}")
 
-    if form.validate_on_submit():
+    if form.validate():
 
         username = form.username.data
         password = form.password.data
 
         error = None
-        print('hi') 
         if User.query.filter_by(username=username).first() is not None:
             error = f"User {username} is already registerd."
 
@@ -35,8 +34,6 @@ def register():
             new_user = User(username=username,password=generate_password_hash(password,method='pbkdf2:sha256')) 
             
 
-            #verify getting user
-            print(new_user)
             
 
             db.session.add(new_user)
@@ -44,6 +41,9 @@ def register():
             return redirect(url_for('auth.login'))
 
         flash(error)
+        print(error)
+    else:
+        flash(form.errors)
 
     return render_template('auth/register.html', form=form)
 
@@ -51,8 +51,10 @@ def register():
 def login():
 
     form = LoginForm()
+    print(f"Is form valid? {str(form.validate())}")
 
-    if form.validate_on_submit():
+
+    if form.validate():
         
         username = form.username.data
         password = form.password.data
@@ -69,9 +71,12 @@ def login():
         if error is None:
             #set up new user
             login_user(user)
-            return redirect(url_for('index'))
+            return redirect(url_for('home.home'))
 
         flash(error)
+        print(error)
+    else:
+        flash(form.errors)
 
     return render_template('auth/login.html', form=form)
 

@@ -14,9 +14,9 @@ class Habit(db.Model):
     __tablename__ = 'habits'
 
     id = db.Column(db.Integer,primary_key=True)
-    name = db.Column(db.String,nullable=False)
-    timeStart = db.Column(db.Date,nullable=False)
+    title = db.Column(db.String,nullable=False)
     count = db.Column(db.Integer,default=0)
+    category = db.Column(db.String, default=0)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
 
 
